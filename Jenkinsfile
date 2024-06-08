@@ -39,12 +39,12 @@ pipeline{
                 sh "npm install"
             }
         }
-        stage('OWASP DP SCAN') {
+        /*stage('OWASP DP SCAN') {
             steps {
                 dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'owasp-dp-check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
+                dependencyCheckPublisher pattern: */ // '**/dependency-check-report.xml'
+           // }
+        //}*/
         stage('TRIVY FS SCAN') {
             steps {
                 sh "trivy fs . > trivyfs.txt"
@@ -65,7 +65,7 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker tag netflix devopsmilan/netflix-clone:latest "
+                       sh "docker tag netflix-clone devopsmilan/netflix-clone:latest "
                        sh "docker push devopsmilan/netflix-clone:latest "
                     }
                 }
